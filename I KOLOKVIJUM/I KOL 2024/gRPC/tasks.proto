@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package tasks;
+
+// Definicija servisa - ovo je kao IDL iz teorije
+// Ovde pisemo koje metode server nudi klijentima
+service TaskService {
+  rpc AddTask (AddTaskRequest) returns (AddTaskResponse);
+  rpc ListTasks (ListTasksRequest) returns (ListTasksResponse);
+  rpc MarkTaskAsCompleted (MarkTaskAsCompletedRequest) returns (MarkTaskAsCompletedResponse);
+}
+
+// Poruka koja opisuje jedan zadatak
+// Svako polje ima tip, ime i broj (tag za binarno enkodiranje)
+message TaskItem {
+  int32 id = 1;
+  string title = 2;
+  bool is_completed = 3;
+}
+
+// Zahtev za dodavanje zadatka - klijent salje samo naziv
+message AddTaskRequest {
+  string title = 1;
+}
+
+// Odgovor nakon dodavanja - server vraca kreiran zadatak
+message AddTaskResponse {
+  TaskItem task = 1;
+}
+
+// Zahtev za listu - nema parametara, ali mora postojati message
+message ListTasksRequest {
+}
+
+// Odgovor sa listom - repeated znaci niz/lista
+message ListTasksResponse {
+  repeated TaskItem tasks = 1;
+}
+
+// Zahtev za oznacavanje - saljemo samo ID zadatka
+message MarkTaskAsCompletedRequest {
+  int32 id = 1;
+}
+
+// Odgovor - vraca azurirani zadatak
+message MarkTaskAsCompletedResponse {
+  TaskItem task = 1;
+}
