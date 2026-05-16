@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package calculator;
+
+service CalculatorService {
+    rpc Add (CalculatorRequest) returns (CalculatorResponse);
+    rpc Subtract (CalculatorRequest) returns (CalculatorResponse);
+    rpc Multiply (CalculatorRequest) returns (CalculatorResponse);
+    rpc Divide (CalculatorRequest) returns (CalculatorResponse);
+}
+
+message CalculatorRequest {
+    int32 operand1 = 1;
+    int32 operand2 = 2;
+}
+
+message CalculatorResponse {
+    int32 operand1 = 1;
+    int32 operand2 = 2;
+    string operation = 3;
+    double result = 4;
+}
