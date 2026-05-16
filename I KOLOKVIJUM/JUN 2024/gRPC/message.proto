@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package messages;
+
+service MessageService {
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
+  rpc DeleteMessage (DeleteMessageRequest) returns (DeleteMessageResponse);
+
+  // server vraca tok poruka, ne jednu poruku
+  rpc ListMessages (ListMessagesRequest) returns (stream MessageItem);
+}
+
+// Jedna poruka
+message MessageItem {
+  int32 id = 1;
+  string content = 2;
+}
+
+// Zahtev za slanje - klijent salje sadrzaj
+message SendMessageRequest {
+  string content = 1;
+}
+
+// Odgovor nakon slanja - vraca kreiranu poruku
+message SendMessageResponse {
+  MessageItem message = 1;
+}
+
+// Zahtev za brisanje - klijent salje ID
+message DeleteMessageRequest {
+  int32 id = 1;
+}
+
+// Odgovor nakon brisanja - potvrda
+message DeleteMessageResponse {
+  bool success = 1;
+}
+
+// Zahtev za listu - prazan, nema parametara
+message ListMessagesRequest {
+}
