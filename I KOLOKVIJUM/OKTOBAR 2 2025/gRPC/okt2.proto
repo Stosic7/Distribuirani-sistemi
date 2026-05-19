@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package numbers;
+
+service CheckSquaredNumbers {
+    rpc Check (stream NumbersItem) returns (stream ServerResponse);
+}
+
+message NumbersItem {
+    int32 a = 1;
+    int32 b = 2;
+}
+
+message ServerResponse {
+    string result = 1;
+}
